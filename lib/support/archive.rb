@@ -33,11 +33,10 @@ module Babushka
     end
     
     def self.detect_type_by_extension path
-      TYPES.keys.detect {|key|
-        TYPES[key][:exts].any? {|extension|
-          path.has_extension? extension
-        }
+      match = TYPES.detect {|type, values|
+        values[:exts].any? {|ext| path.has_extension?(ext) }
       }
+      match.first if match
     end
     
     def self.detect_type_by_contents path
